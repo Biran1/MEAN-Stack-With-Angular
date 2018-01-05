@@ -1,6 +1,7 @@
 /* ===================
    Import Node Modules
 =================== */
+const env = require('./env');
 const express = require('express'); // Fast, unopinionated, minimalist web framework for node.
 const app = express(); // Initiate Express Application
 const router = express.Router(); // Creates a new router object.

@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
 
-  domain = ""; // Production
-  /* domain = environment.domain; */
+  // domain = ""; // Production
+  domain = environment.domain;
   authToken;
   user;
   options;

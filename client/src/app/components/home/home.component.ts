@@ -17,9 +17,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
         // Get profile username on page load
+        if(this.authService.loggedIn()){
         this.authService.getProfile().subscribe(profile => {
-          this.username = profile.user.username; // Used when creating new blog posts and comments
+          this.username = profile.user.username; 
         });
+      }
   }
-
 }

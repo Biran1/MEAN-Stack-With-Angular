@@ -1,0 +1,35 @@
+
+שם משתמש: test 10
+סיסמה: Bb12345678!
+
+קודם להריץ את הסרבר של מונגו:
+
+להריץ ב CMD:
+
+"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe"
+
+
+הרצת הסרבר של אנגולר:
+
+בCMD - קודם להגיע לתיקייה:
+cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular\client\src\app
+
+ואז להריץ את הפקודה:
+ng serve
+
+מאזין ל:
+http://localhost:4200/
+
+
+
+
+בCMD - הרצת הסרבר של node.js:
+
+cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular
+
+
+ואז להריץ את הפקודה:
+nodemon index.js
+
+מאזין ל:
+http://localhost:8080/

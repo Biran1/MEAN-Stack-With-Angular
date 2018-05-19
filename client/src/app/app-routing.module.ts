@@ -9,6 +9,8 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
 import { BlogComponent } from './components/blog/blog.component';
 import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
+import { SubCategoryComponent } from './components/dashboard/sub-category/sub-category.component';
+import { GroupComponent } from './components/group/group.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
 
@@ -39,7 +41,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard] // User must be logged in to view this route
   },
   {
-    path: 'blog',
+    path: 'blog/:id',
     component: BlogComponent, // Blog Route,
     canActivate: [AuthGuard] // User must be logged in to view this route
   },
@@ -56,6 +58,16 @@ const appRoutes: Routes = [
   {
     path: 'user/:username',
     component: PublicProfileComponent, // Public Profile Route
+    canActivate: [AuthGuard] // User must be logged in to view this route
+  },
+  {
+    path: 'sub-category/:id',
+    component: SubCategoryComponent, // Edit Blog Route
+    canActivate: [AuthGuard] // User must be logged in to view this route
+  },
+  {
+    path: 'group/:subCategory',
+    component: GroupComponent, // Edit Blog Route
     canActivate: [AuthGuard] // User must be logged in to view this route
   },
   { path: '**', component: HomeComponent } // "Catch-All" Route

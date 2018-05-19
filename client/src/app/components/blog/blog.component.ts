@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { BlogService } from '../../services/blog.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
@@ -21,11 +22,14 @@ export class BlogComponent implements OnInit {
   blogPosts;
   newComment = [];
   enabledComments = [];
+  currentUrl;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.createNewBlogForm(); // Create new blog form on start up
     this.createCommentForm(); // Create form for posting comments on a user's blog post
@@ -102,7 +106,7 @@ export class BlogComponent implements OnInit {
   // Reload blogs on current page
   reloadBlogs() {
     this.loadingBlogs = true; // Used to lock button
-    this.getAllBlogs(); // Add any new blogs to the page
+    this.getBlogsBygroupID(); // Add any new blogs to the page
     setTimeout(() => {
       this.loadingBlogs = false; // Release button lock after four seconds
     }, 4000);
@@ -133,7 +137,8 @@ export class BlogComponent implements OnInit {
     const blog = {
       title: this.form.get('title').value, // Title field
       body: this.form.get('body').value, // Body field
-      createdBy: this.username // CreatedBy field
+      createdBy: this.username, // CreatedBy field
+      groupID: this.currentUrl.id
     }
 
     // Function to save blog into database
@@ -147,7 +152,7 @@ export class BlogComponent implements OnInit {
       } else {
         this.messageClass = 'alert alert-success'; // Return success class
         this.message = data.message; // Return success message
-        this.getAllBlogs();
+        this.getBlogsBygroupID();
         // Clear form data after two seconds
         setTimeout(() => {
           this.newPost = false; // Hide form
@@ -173,11 +178,19 @@ export class BlogComponent implements OnInit {
     });
   }
 
+
+  // Function to get all blogs by groupID from the database
+  getBlogsBygroupID(){
+    this.blogService.getBlogsBygroupID(this.currentUrl.id).subscribe(data => {
+      this.blogPosts = data.blogs; // Assign array to use in HTML
+    });
+  }
+
   // Function to like a blog post
   likeBlog(id) {
     // Service to like a blog post
     this.blogService.likeBlog(id).subscribe(data => {
-      this.getAllBlogs(); // Refresh blogs after like
+      this.getBlogsBygroupID(); // Refresh blogs after like
     });
   }
 
@@ -185,7 +198,7 @@ export class BlogComponent implements OnInit {
   dislikeBlog(id) {
     // Service to dislike a blog post
     this.blogService.dislikeBlog(id).subscribe(data => {
-      this.getAllBlogs(); // Refresh blogs after dislike
+      this.getBlogsBygroupID(); // Refresh blogs after dislike
     });
   }
 
@@ -196,7 +209,7 @@ export class BlogComponent implements OnInit {
     const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
     // Function to save the comment to the database
     this.blogService.postComment(id, comment).subscribe(data => {
-      this.getAllBlogs(); // Refresh all blogs to reflect the new comment
+      this.getBlogsBygroupID(); // Refresh all blogs to reflect the new comment
       const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
       this.newComment.splice(index, 1); // Remove id from the array
       this.enableCommentForm(); // Re-enable the form
@@ -218,12 +231,15 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUrl = this.activatedRoute.snapshot.params; // When component loads, grab the id
+
     // Get profile username on page load
     this.authService.getProfile().subscribe(profile => {
       this.username = profile.user.username; // Used when creating new blog posts and comments
     });
 
-    this.getAllBlogs(); // Get all blogs on component load
+    /* this.getAllBlogs(); */  // Get all blogs on component load
+    this.getBlogsBygroupID();
   }
 
 }

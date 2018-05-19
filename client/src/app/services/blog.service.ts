@@ -37,6 +37,13 @@ export class BlogService {
     return this.http.get(this.domain + 'blogs/allBlogs', this.options).map(res => res.json());
   }
 
+    // Function to get all blogs by groupID from the database
+    getBlogsBygroupID(id) {
+      this.createAuthenticationHeaders(); // Create headers
+      return this.http.get(this.domain + 'blogs/blogsBygroupID/'+ id, this.options).map(res => res.json());
+    }
+  
+
   // Function to get the blog using the id
   getSingleBlog(id) {
     this.createAuthenticationHeaders(); // Create headers

@@ -107,7 +107,8 @@ const blogSchema = new Schema({
   comments: [{
     comment: { type: String, validate: commentValidators },
     commentator: { type: String }
-  }]
+  }],
+  groupID: { type: mongoose.Schema.Types.ObjectId }
 });
 
 // Export Module/Schema

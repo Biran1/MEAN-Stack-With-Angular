@@ -20,37 +20,45 @@ module.exports = (router) => {
         // Check if blog's creator was provided
         if (!req.body.createdBy) {
           res.json({ success: false, message: 'Blog creator is required.' }); // Return error
-        } else {
-          // Create the blog object for insertion into database
-          const blog = new Blog({
-            title: req.body.title, // Title field
-            body: req.body.body, // Body field
-            createdBy: req.body.createdBy // CreatedBy field
-          });
-          // Save blog into database
-          blog.save((err) => {
-            // Check if error
-            if (err) {
-              // Check if error is a validation error
-              if (err.errors) {
-                // Check if validation error is in the title field
-                if (err.errors.title) {
-                  res.json({ success: false, message: err.errors.title.message }); // Return error message
-                } else {
-                  // Check if validation error is in the body field
-                  if (err.errors.body) {
-                    res.json({ success: false, message: err.errors.body.message }); // Return error message
+        }
+        else {
+          // Check if groupID was provided
+          if (!req.body.groupID) {
+            res.json({ success: false, message: 'groupID is required.' }); // Return error
+          }
+          else {
+            // Create the blog object for insertion into database
+            const blog = new Blog({
+              title: req.body.title, // Title field
+              body: req.body.body, // Body field
+              createdBy: req.body.createdBy, // CreatedBy field
+              groupID: req.body.groupID
+            });
+            // Save blog into database
+            blog.save((err) => {
+              // Check if error
+              if (err) {
+                // Check if error is a validation error
+                if (err.errors) {
+                  // Check if validation error is in the title field
+                  if (err.errors.title) {
+                    res.json({ success: false, message: err.errors.title.message }); // Return error message
                   } else {
-                    res.json({ success: false, message: err }); // Return general error message
+                    // Check if validation error is in the body field
+                    if (err.errors.body) {
+                      res.json({ success: false, message: err.errors.body.message }); // Return error message
+                    } else {
+                      res.json({ success: false, message: err }); // Return general error message
+                    }
                   }
+                } else {
+                  res.json({ success: false, message: err }); // Return general error message
                 }
               } else {
-                res.json({ success: false, message: err }); // Return general error message
+                res.json({ success: true, message: 'Blog saved!' }); // Return success message
               }
-            } else {
-              res.json({ success: true, message: 'Blog saved!' }); // Return success message
-            }
-          });
+            });
+          }
         }
       }
     }
@@ -74,6 +82,34 @@ module.exports = (router) => {
         }
       }
     }).sort({ '_id': -1 }); // Sort blogs from newest to oldest
+  });
+
+
+  /* ===============================================================
+   GET BLOGS BY GROUP ID
+=============================================================== */
+  router.get('/blogsBygroupID/:id', (req, res) => {
+
+    // Check if groupID is present in parameters
+    if (!req.params.id) {
+      res.json({ success: false, message: 'No group ID was provided.' }); // Return error message
+    } else {
+      // Search database for all the relevant blogs
+      Blog.find({ groupID: req.params.id }, (err, blogs) => {
+        // Check if error was found or not
+        if (err) {
+          res.json({ success: false, message: err }); // Return error message
+        } else {
+          // Check if relevant blogs were found in database
+          if (!blogs) {
+            res.json({ success: false, message: 'No blogs found.' }); // Return error of no blogs found
+          } else {
+            res.json({ success: true, blogs: blogs }); // Return success and blogs array
+          }
+        }
+      }).sort({ '_id': -1 }); // Sort blogs from newest to oldest
+
+    }
   });
 
   /* ===============================================================

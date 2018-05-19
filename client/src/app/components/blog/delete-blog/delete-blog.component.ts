@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { BlogService } from '../../../services/blog.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +19,8 @@ export class DeleteBlogComponent implements OnInit {
   constructor(
     private blogService: BlogService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   // Function to delete blogs
@@ -35,10 +37,15 @@ export class DeleteBlogComponent implements OnInit {
         this.message = data.message; // Return success message
         // After two second timeout, route to blog page
         setTimeout(() => {
-          this.router.navigate(['/blog']); // Route users to blog page
+          this.location.back();          // Route users to blog page
         }, 2000);
       }
     });
+  }
+
+  // Function to go back to previous page
+  goBack() {
+    this.location.back();
   }
 
   ngOnInit() {

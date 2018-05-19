@@ -44,3 +44,19 @@
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
+
+.cardFix{
+    width: 20rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 3.5rem;
+}
+
+.list-groupFix{
+    margin: auto;
+    margin-top: 8%;
+}
+
+.postCommentBtn{
+    margin: auto;
+}

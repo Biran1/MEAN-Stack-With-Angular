@@ -24,6 +24,7 @@ import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.c
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { SubCategoryComponent } from './components/dashboard/sub-category/sub-category.component';
 import { GroupComponent } from './components/group/group.component';
+import { CreateGroupComponent } from './components/create-group/create-group.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { GroupComponent } from './components/group/group.component';
     PublicProfileComponent,
     SubCategoryComponent,
     GroupComponent,
+    CreateGroupComponent,
   ],
   imports: [
     BrowserModule,

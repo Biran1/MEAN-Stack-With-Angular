@@ -3,4 +3,5 @@
 <div class="container">
   <flash-messages></flash-messages>
   <router-outlet></router-outlet>
+  <img src="/assets/Images/plusGreen.svg" class="plusIcon" [routerLink]="['/create-group/']" *ngIf="authService.loggedIn()" >
 </div>

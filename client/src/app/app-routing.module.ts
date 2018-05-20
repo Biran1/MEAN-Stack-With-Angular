@@ -11,6 +11,7 @@ import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.compone
 import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 import { SubCategoryComponent } from './components/dashboard/sub-category/sub-category.component';
 import { GroupComponent } from './components/group/group.component';
+import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
 
@@ -68,6 +69,11 @@ const appRoutes: Routes = [
   {
     path: 'group/:subCategory',
     component: GroupComponent, // Edit Blog Route
+    canActivate: [AuthGuard] // User must be logged in to view this route
+  },
+  {
+    path: 'create-group',
+    component: CreateGroupComponent, // Edit Blog Route
     canActivate: [AuthGuard] // User must be logged in to view this route
   },
   { path: '**', component: HomeComponent } // "Catch-All" Route

@@ -12,7 +12,7 @@
 הרצת הסרבר של אנגולר:
 
 בCMD - קודם להגיע לתיקייה:
-cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular\client\src\app
+cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular6\client\src\app
 
 ואז להריץ את הפקודה:
 ng serve
@@ -25,7 +25,7 @@ http://localhost:4200/
 
 בCMD - הרצת הסרבר של node.js:
 
-cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular
+cd Desktop\Code Projects\MEAN stack folder\MY-MEAN-Stack-With-Angular6
 
 
 ואז להריץ את הפקודה:

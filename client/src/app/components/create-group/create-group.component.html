@@ -1,3 +1,22 @@
-<p>
-  create-group works!
-</p>
+<div id="accordion" role="tablist" aria-multiselectable="true" style="direction:rtl">
+  <div class="card" *ngFor="let category of categories; let i =index">
+    <a class="card-header" role="tab" id="{{category._id}}" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_{{i}}" aria-expanded="true" aria-controls="collapseOne">
+      <h5 class="mb-0 text-center">
+          {{category.catName}}
+      </h5>
+    </a>
+
+    <div id="collapseOne_{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="list-group">
+        <a ngDefaultControl (click)="selectedCategory(subCategory._id)" *ngFor="let subCategory of category?.subCat" id="{{subCategory._id}}"
+          class="list-group-item list-group-item-action">
+          {{subCategory.subCatName}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <button (click)="saveGroup()" type="button" class="btn btn-primary mt-4">Save</button>
+</div>

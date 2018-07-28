@@ -1,22 +1,70 @@
-<div id="accordion" role="tablist" aria-multiselectable="true" style="direction:rtl">
-  <div class="card" *ngFor="let category of categories; let i =index">
-    <a class="card-header" role="tab" id="{{category._id}}" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_{{i}}" aria-expanded="true" aria-controls="collapseOne">
-      <h5 class="mb-0 text-center">
-          {{category.catName}}
-      </h5>
-    </a>
+<h1 class="page-header">Create Group</h1>
 
-    <div id="collapseOne_{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-      <div class="list-group">
-        <a ngDefaultControl (click)="selectedCategory(subCategory._id)" *ngFor="let subCategory of category?.subCat" id="{{subCategory._id}}"
-          class="list-group-item list-group-item-action">
-          {{subCategory.subCatName}}
-        </a>
-      </div>
-    </div>
+<!-- Custom Success/Error Message -->
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass" class="mx-auto">
+    {{ message }}
   </div>
 </div>
 
-<div class="text-center">
-  <button (click)="saveGroup()" type="button" class="btn btn-primary mt-4">Save</button>
-</div>
+<form [formGroup]="form" (submit)="onRegisterSubmit()">
+
+  <!-- GroupName Input -->
+  <div class="form-group">
+    <label for="groupName">Group Name</label>
+    <div [ngClass]="{'has-danger': (form.controls.groupName.errors && form.controls.groupName.dirty) || (form.controls.groupName.dirty), 'has-success': !form.controls.groupName.errors}">
+      <input type="text" name="groupName" class="form-control" autocomplete="off" placeholder="*Group Name" formControlName="groupName"
+      />
+      <!-- Validation -->
+      <ul class="form-control-feedback">
+        <li *ngIf="form.controls.groupName.errors?.required && form.controls.groupName.dirty">This field is required</li>
+        <li *ngIf="form.controls.groupName.errors?.minlength && form.controls.groupName.dirty || form.controls.groupName.errors?.maxlength && form.controls.groupName.dirty ">Minimum characters: 3, Maximum characters: 15</li>
+        <li *ngIf="form.controls.groupName.errors?.validateGroupName && form.controls.groupName.dirty">Group Name must not have any special characters</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- GroupDesc Input -->
+  <div class="form-group">
+    <label for="groupDesc">Group Description</label>
+    <div [ngClass]="{'has-danger': (form.controls.groupDesc.errors && form.controls.groupDesc.dirty) || (form.controls.groupDesc.dirty), 'has-success': !form.controls.groupDesc.errors}">
+      <input type="text" name="groupDesc" class="form-control" autocomplete="off" placeholder="*Group Description" formControlName="groupDesc"
+      />
+      <!-- Validation -->
+      <ul class="form-control-feedback">
+        <li *ngIf="form.controls.groupDesc.errors?.required && form.controls.groupDesc.dirty">This field is required</li>
+        <li *ngIf="form.controls.groupDesc.errors?.minlength && form.controls.groupDesc.dirty || form.controls.groupDesc.errors?.maxlength && form.controls.groupDesc.dirty ">Minimum characters: 3, Maximum characters: 60</li>
+        <li *ngIf="form.controls.groupDesc.errors?.validateGroupName && form.controls.groupDesc.dirty">Group Description must not have any special characters</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div id="accordion" role="tablist" aria-multiselectable="true" style="direction:rtl">
+      <div class="card" *ngFor="let category of categories; let i =index">
+        <a class="card-header" role="tab" id="{{category._id}}" data-toggle="collapse" data-parent="#accordion" href="#collapseOne_{{i}}"
+          aria-expanded="true" aria-controls="collapseOne">
+          <h5 class="mb-0 text-center">
+            {{category.catName}}
+          </h5>
+        </a>
+        <div id="collapseOne_{{i}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="list-group">
+            <button type="button" ngDefaultControl (click)="selectedCategory(subCategory._id)" *ngFor="let subCategory of category?.subCat"
+              id="{{subCategory._id}}" class="list-group-item list-group-item-action">
+              {{subCategory.subCatName}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save Input -->
+  <div class="text-center">
+    <input [disabled]="!form.valid || processing" type="submit" class="btn btn-primary" value="Save" />
+  </div>
+
+</form>
+<!-- Registration Form /-->

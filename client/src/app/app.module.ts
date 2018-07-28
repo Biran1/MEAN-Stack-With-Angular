@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GlobalsService } from './services/globals.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -25,6 +26,7 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
 import { SubCategoryComponent } from './components/dashboard/sub-category/sub-category.component';
 import { GroupComponent } from './components/group/group.component';
 import { CreateGroupComponent } from './components/create-group/create-group.component';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,7 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
     AppRoutingModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, AuthGuard, NotAuthGuard, BlogService,CategoryService,GroupService],
+  providers: [GlobalsService,AuthService, AuthGuard, NotAuthGuard, BlogService,CategoryService,GroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

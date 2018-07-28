@@ -8,7 +8,7 @@ import { AuthService } from '../app/services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Hello World from Angular 2!';
+  title = 'Hello World from Angular !';
 
   constructor(
     public authService: AuthService,

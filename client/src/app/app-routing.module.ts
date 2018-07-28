@@ -15,7 +15,7 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
 import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
 
-// Our Array of Angular 2 Routes
+// Our Array of Angular Routes
 const appRoutes: Routes = [
   {
     path: '',

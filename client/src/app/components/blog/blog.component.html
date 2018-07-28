@@ -1,4 +1,4 @@
-<h1 class="page-header">Blog Feed</h1>
+<h1 class="text-center mb-4">{{group?.groupName}}</h1>
 
 <!-- Custom Success/Error Message -->
 <div class="row show-hide-message" *ngIf="message && newPost">
@@ -8,10 +8,10 @@
 </div>
 
 <!-- New Post Button -->
-<button type="button" name="button" class="btn btn-warning" *ngIf="!newPost" (click)="newBlogForm()">New Post</button>
+<button type="button" name="button" class="btn btn-primary" *ngIf="!newPost" (click)="newBlogForm()">New Post</button>
 
 <!-- Reload Button -->
-<button [disabled]="loadingBlogs" type="button" name="button" class="btn btn-default" *ngIf="!newPost" (click)="reloadBlogs()">
+<button [disabled]="loadingBlogs" type="button" name="button" class="btn btn-secondary" *ngIf="!newPost" (click)="reloadBlogs()">
   <span class="glyphicon glyphicon-repeat"></span>&nbsp;&nbsp;Reload</button>
 
 <br />
@@ -61,7 +61,7 @@
 <div *ngIf="!newPost">
   <!-- Card Outer Layer -->
   <div class="row">
-    <div class="card cardFix col-md-6 col-lg-3 mb-4" *ngFor="let blog of blogPosts">
+    <div class="card cardFix col-md-6 col-lg-3 mb-4 mx-auto" *ngFor="let blog of blogPosts">
       <div class="card-block">
 
         <!-- Card Title -->
@@ -124,7 +124,7 @@
         <ul class="list-group list-groupFix">
           <li class="list-group-item">
             <!-- Post Comment Button -->
-            <button type="button" name="button" class="btn btn-sm btn-danger postCommentBtn" (click)="draftComment(blog._id)" [disabled]="newComment.indexOf(blog._id) > -1">Post Comment</button>
+            <button type="button" name="button" class="btn btn-sm btn-primary postCommentBtn" (click)="draftComment(blog._id)" [disabled]="newComment.indexOf(blog._id) > -1">Post Comment</button>
             <br />
             <br />
             <div *ngIf="newComment.indexOf(blog._id) > -1">

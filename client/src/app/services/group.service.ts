@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 export class GroupService {
   options;
   domain = this.authService.domain;
+  test;
 
   constructor(
     private authService: AuthService,
@@ -32,4 +33,15 @@ export class GroupService {
     return this.http.get(this.domain + 'groups/getAllGroupsBySubCategory/' + subCategory, this.options).map(res => res.json());
   }
 
+  // Function to get group by groupID from the database
+  getGroupByGroupID(id) {
+    this.createAuthenticationHeaders(); // Create headers
+    return this.http.get(this.domain + 'groups/getGroupByGroupID/' + id, this.options).map(res => res.json());
+  }
+
+  // Function to Save the group    
+  saveGroup(group) {
+    this.createAuthenticationHeaders(); // Create headers
+    return this.http.post(this.domain + 'groups/saveGroup/', group, this.options).map(res => res.json());
+  }
 }

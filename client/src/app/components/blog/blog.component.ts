@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { BlogService } from '../../services/blog.service';
+import { GroupService } from '../../services/group.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  styleUrls: ['./blog.component.css'],
 })
 export class BlogComponent implements OnInit {
 
@@ -23,6 +26,7 @@ export class BlogComponent implements OnInit {
   newComment = [];
   enabledComments = [];
   currentUrl;
+  group;
 
 
   constructor(
@@ -30,6 +34,7 @@ export class BlogComponent implements OnInit {
     private authService: AuthService,
     private blogService: BlogService,
     private activatedRoute: ActivatedRoute,
+    private groupService: GroupService
   ) {
     this.createNewBlogForm(); // Create new blog form on start up
     this.createCommentForm(); // Create form for posting comments on a user's blog post
@@ -170,19 +175,18 @@ export class BlogComponent implements OnInit {
     window.location.reload(); // Clear all variable states
   }
 
-  // Function to get all blogs from the database
-  getAllBlogs() {
-    // Function to GET all blogs from database
-    this.blogService.getAllBlogs().subscribe(data => {
+
+  // Function to get all blogs by groupID from the database
+  getBlogsBygroupID() {
+    this.blogService.getBlogsBygroupID(this.currentUrl.id).subscribe(data => {
       this.blogPosts = data.blogs; // Assign array to use in HTML
     });
   }
 
-
-  // Function to get all blogs by groupID from the database
-  getBlogsBygroupID(){
-    this.blogService.getBlogsBygroupID(this.currentUrl.id).subscribe(data => {
-      this.blogPosts = data.blogs; // Assign array to use in HTML
+  // Function to get group by groupID from the database
+  getGroupByGroupID() {
+    this.groupService.getGroupByGroupID(this.currentUrl.id).subscribe(data => {
+      this.group = data.group; // Assign array to use in HTML
     });
   }
 
@@ -232,14 +236,15 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.activatedRoute.snapshot.params; // When component loads, grab the id
+    if (this.authService.user != undefined) {
+      this.username = this.authService.user.username;
+    }
+    else {
+      this.username = JSON.parse(localStorage.getItem('user')).username;
+    }
 
-    // Get profile username on page load
-    this.authService.getProfile().subscribe(profile => {
-      this.username = profile.user.username; // Used when creating new blog posts and comments
-    });
-
-    /* this.getAllBlogs(); */  // Get all blogs on component load
-    this.getBlogsBygroupID();
+    this.getBlogsBygroupID(); // Get all blogs by groupID on component load
+    this.getGroupByGroupID(); // Get all group by groupID on component load
   }
 
 }

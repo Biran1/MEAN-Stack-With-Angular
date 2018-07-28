@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -6,15 +6,24 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  host: {
+    '(document:click)': 'onClick($event)',
+  }
 })
 export class NavbarComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
     private router: Router,
-    private flashMessagesService: FlashMessagesService
+    private flashMessagesService: FlashMessagesService,
+    private _eref: ElementRef
   ) { }
+
+  onClick(event) {
+    if (!this._eref.nativeElement.contains(event.target))
+     { }
+  }
 
   // Function to logout user
   onLogoutClick() {

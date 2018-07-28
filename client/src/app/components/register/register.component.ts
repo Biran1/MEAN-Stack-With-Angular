@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    this.createForm(); // Create Angular 2 Form when component loads
+    this.createForm(); // Create Angular Form when component loads
   }
 
   // Function to create registration form

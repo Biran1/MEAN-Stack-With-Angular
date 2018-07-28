@@ -43,7 +43,7 @@ app.use('/categories', categories); // Use Category routes in application
 app.use('/groups', groups); // Use Group routes in application
 
 
-// Connect server to Angular 2 Index.html
+// Connect server to Angular Index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });

@@ -10,7 +10,7 @@ const groupSchema = new Schema({
     groupName: { type: String },
     groupDesc: { type: String },
     subCat: { type: mongoose.Schema.Types.ObjectId },
-    users: [{ type: String }]
+    users: { type: Array }   
 });
 
 // Export Module/Schema
